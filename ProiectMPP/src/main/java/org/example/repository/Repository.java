@@ -7,3 +7,4 @@ public interface Repository<ID, T> {
     T findOne(ID id);
     Iterable<T> findAll();
 }
+//entity

@@ -2,8 +2,7 @@ package org.example.domain;
 
 import java.io.Serializable;
 
-public class Donation implements Serializable {
-    private Long id;
+public class Donation extends Entity<Long> {
     private Donor donor;
     private CharityCase charityCase;
     private double amount;
@@ -16,8 +15,6 @@ public class Donation implements Serializable {
         this.amount = amount;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
     public Donor getDonor() { return donor; }
     public void setDonor(Donor donor) { this.donor = donor; }
     public CharityCase getCharityCase() { return charityCase; }

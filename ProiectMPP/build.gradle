@@ -16,14 +16,21 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
     implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 
+    implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-application
-        {
-            mainClass = 'Main'
-        }
+
+application {
+    mainClass = 'Main'
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
@@ -37,6 +44,7 @@ jar {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
 test {
     useJUnitPlatform()
 }
