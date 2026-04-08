@@ -14,7 +14,10 @@ public class Donor extends Entity<Long> {
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
-
+    @Override
+    public String toString() {
+        return name + " (Tel: " + phoneNumber + ")";
+    }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getAddress() { return address; }

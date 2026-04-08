@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.LoginController" prefWidth="300" prefHeight="250">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="Teledon Login" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+    <TextField fx:id="usernameField" promptText="Utilizator"/>
+    <PasswordField fx:id="passwordField" promptText="Parola"/>
+    <Button text="Autentificare" onAction="#handleLogin" maxWidth="Infinity"
+            style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+</VBox>

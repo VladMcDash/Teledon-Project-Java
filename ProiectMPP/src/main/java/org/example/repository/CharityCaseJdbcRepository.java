@@ -3,8 +3,6 @@ package org.example.repository;
 import org.example.domain.CharityCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.JdbcUtils;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +19,9 @@ public class CharityCaseJdbcRepository implements CharityCaseRepository {
     @Override
     public Iterable<CharityCase> findAll() {
         logger.traceEntry();
-        Connection con = dbUtils.getConnection();
         List<CharityCase> cases = new ArrayList<>();
-        try (PreparedStatement preStmt = con.prepareStatement("SELECT * FROM CharityCases")) {
+        try (Connection con = dbUtils.getConnection();
+             PreparedStatement preStmt = con.prepareStatement("SELECT * FROM CharityCases")) {
             try (ResultSet result = preStmt.executeQuery()) {
                 while (result.next()) {
                     CharityCase c = new CharityCase(result.getString("name"), result.getDouble("totalAmount"));
@@ -39,9 +37,9 @@ public class CharityCaseJdbcRepository implements CharityCaseRepository {
 
     @Override
     public void updateTotalAmount(Long id, double amount) {
-        logger.traceEntry("incrementing amount for case id {}", id);
-        Connection con = dbUtils.getConnection();
-        try (PreparedStatement preStmt = con.prepareStatement("UPDATE CharityCases SET totalAmount = totalAmount + ? WHERE id = ?")) {
+        logger.traceEntry("Updating amount for case {}", id);
+        try (Connection con = dbUtils.getConnection();
+             PreparedStatement preStmt = con.prepareStatement("UPDATE CharityCases SET totalAmount = totalAmount + ? WHERE id = ?")) {
             preStmt.setDouble(1, amount);
             preStmt.setLong(2, id);
             preStmt.executeUpdate();
