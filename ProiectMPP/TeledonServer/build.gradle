@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':TeledonModel')
+    implementation project(':TeledonPersistence')
+    implementation project(':TeledonServices')
+    implementation project(':TeledonNetworking')
+}

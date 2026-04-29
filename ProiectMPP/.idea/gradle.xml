@@ -9,6 +9,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/TeledonClient" />
+            <option value="$PROJECT_DIR$/TeledonModel" />
+            <option value="$PROJECT_DIR$/TeledonNetworking" />
+            <option value="$PROJECT_DIR$/TeledonPersistence" />
+            <option value="$PROJECT_DIR$/TeledonServer" />
+            <option value="$PROJECT_DIR$/TeledonServices" />
           </set>
         </option>
       </GradleProjectSettings>
