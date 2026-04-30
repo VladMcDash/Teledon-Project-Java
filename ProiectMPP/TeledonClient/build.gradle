@@ -1,6 +1,8 @@
 plugins {
+    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 javafx {
@@ -9,12 +11,32 @@ javafx {
 }
 
 dependencies {
+    implementation 'org.openjfx:javafx-controls:17.0.2'
+    implementation 'org.openjfx:javafx-fxml:17.0.2'
     implementation project(':TeledonModel')
     implementation project(':TeledonServices')
     implementation project(':TeledonNetworking')
     implementation project(':TeledonPersistence')
+    implementation 'io.grpc:grpc-netty-shaded:1.56.0'
+    implementation 'io.grpc:grpc-protobuf:1.56.0'
+    implementation 'io.grpc:grpc-stub:1.56.0'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
 }
-
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.22.3"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.56.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
 application {
     mainClass = 'org.example.Main'
 }

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.controller.LoginController;
+import org.example.network.TeledonGrpcProxy;
 import org.example.network.rpcprotocol.TeledonServerRpcProxy;
 import org.example.services.ITeledonServices;
 
@@ -20,8 +21,7 @@ public class Main extends Application {
         try {
             var inputStream = StartClient.class.getResourceAsStream("/client.properties");
             if (inputStream == null) {
-                System.err.println("ATENTIE: Fisierul client.properties nu a fost gasit in resources!");
-                System.err.println("Vom folosi datele default (localhost:55555).");
+                System.err.println("default ->(localhost:55555).");
             } else {
                 clientProps.load(inputStream);
                 System.out.println("Client properties loaded.");
@@ -43,7 +43,8 @@ public class Main extends Application {
 
         System.out.println("Incercare de conectare la serverul: " + serverIP + " pe portul " + serverPort);
 
-        ITeledonServices server = new TeledonServerRpcProxy(serverIP, serverPort);
+        //ITeledonServices server = new TeledonServerRpcProxy(serverIP, serverPort);
+        ITeledonServices server = new TeledonGrpcProxy("localhost", 5000);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/login-view.fxml"));

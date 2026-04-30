@@ -9,12 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.util.List;
-
+import javafx.application.Platform;
 import org.example.domain.Volunteer;
 import org.example.services.ITeledonServices;
 import org.example.services.ITeledonObserver;
 import org.example.services.TeledonException;
-import javafx.application.Platform;
 
 public class MainController implements ITeledonObserver {
     private ITeledonServices service;
@@ -130,23 +129,8 @@ public class MainController implements ITeledonObserver {
                     break;
                 }
             }
+            loadData();
             casesTable.refresh();
-        });
-    }
-    @Override
-    public void donorUpdated(Donor updatedDonor) {
-        if (updatedDonor == null) return;
-
-        Platform.runLater(() -> {
-            ObservableList<Donor> donors = donorsList.getItems();
-            for (int i = 0; i < donors.size(); i++) {
-                Donor current = donors.get(i);
-                if (current.getId().equals(updatedDonor.getId())) {
-                    donors.set(i, updatedDonor);
-                    break;
-                }
-            }
-            donorsList.refresh();
         });
     }
     @FXML
@@ -159,13 +143,29 @@ public class MainController implements ITeledonObserver {
             String addr = addressField.getText();
             String tel = phoneField.getText();
 
-            service.addDonation(name, addr, tel, 0L, 0.0);
+            service.updateDonor(selected.getId(), name, addr, tel);
 
-            loadData();
+            selected.setName(name);
+            selected.setAddress(addr);
+            selected.setPhoneNumber(tel);
+
+            donorsList.refresh();
+
             clearFields();
             new Alert(Alert.AlertType.INFORMATION, "Donator actualizat cu succes!").show();
+
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
+    }
+
+
+    @Override
+    public void donorUpdated(Donor updatedDonor) {
+        Platform.runLater(() -> {
+            System.out.println("[Notificare] Un donator a fost modificat!");
+
+            loadData();
+        });
     }
 }

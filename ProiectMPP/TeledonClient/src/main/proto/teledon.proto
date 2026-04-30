@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.example.grpc";
+option java_outer_classname = "TeledonProto";
+option csharp_namespace = "Teledon.Grpc";
+
+package teledon;
+
+// Serviciul principal
+service TeledonService {
+  rpc Login (LoginRequest) returns (stream Notification);
+  rpc Logout (UserRequest) returns (Empty);
+  rpc GetAllCases (Empty) returns (CaseListResponse);
+  rpc AddDonation (DonationRequest) returns (Empty);
+  rpc SearchDonors (SearchDonorRequest) returns (DonorListResponse);
+  rpc UpdateDonor (DonorRequest) returns (Empty);
+}
+
+// --- Definiții Entități ---
+message ProtoVolunteer {
+  int64 id = 1;
+  string username = 2;
+  string name = 3;
+}
+
+message ProtoCharityCase {
+  int64 id = 1;
+  string name = 2;
+  double totalDonated = 3;
+}
+
+message ProtoDonor {
+  int64 id = 1;
+  string name = 2;
+  string address = 3;
+  string phoneNumber = 4;
+}
+
+// --- Request-uri și Response-uri ---
+message Empty {}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message UserRequest {
+  string username = 1;
+}
+
+message CaseListResponse {
+  repeated ProtoCharityCase cases = 1;
+}
+
+message DonorListResponse {
+  repeated ProtoDonor donors = 1;
+}
+
+message DonationRequest {
+  ProtoDonor donor = 1;
+  ProtoCharityCase charityCase = 2;
+  double amount = 3;
+}
+
+message SearchDonorRequest {
+  string keyword = 1;
+}
+
+message DonorRequest {
+  ProtoDonor donor = 1;
+}
+
+// --- Notificari (Observer) ---
+message Notification {
+  enum Type {
+    UNKNOWN = 0;
+    DONATION_ADDED = 1;
+    DONOR_UPDATED = 2;
+  }
+  Type type = 1;
+  string message = 2;
+}
