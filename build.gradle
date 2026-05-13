@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0' apply false
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    dependencies {
+        testImplementation platform('org.junit:junit-bom:5.10.0')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+
+        implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.22.1'
+        implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.22.1'
+
+        implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

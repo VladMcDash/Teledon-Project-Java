@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Conexiunea la SQLite -->
+        <property name="connection.driver_class">org.sqlite.JDBC</property>
+        <property name="connection.url">jdbc:sqlite:teledon.db</property>
+        <property name="dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+
+        <!-- Cerinta 5: Afisare SQL in consola -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="highlight_sql">true</property>
+
+        <!-- Entitatile mapate -->
+        <mapping class="org.example.domain.Volunteer"/>
+        <mapping class="org.example.domain.CharityCase"/>
+    </session-factory>
+</hibernate-configuration>
